@@ -5,8 +5,12 @@
       "src": "web/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "web/dist"
+        "distDir": "dist"
       }
+    },
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
@@ -16,7 +20,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/web/index.html"
+      "dest": "/index.html"
     }
   ],
   "functions": {

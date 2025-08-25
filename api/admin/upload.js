@@ -1,4 +1,4 @@
-import { verifyToken, requireAdmin } from '../lib/auth'
+import { verifyToken, requireAdmin } from '../lib/auth.js'
 import formidable from 'formidable'
 import sharp from 'sharp'
 import { v4 as uuidv4 } from 'uuid'
@@ -18,10 +18,10 @@ export default async function handler(req, res) {
 
   // 验证管理员权限
   try {
-    await verifyToken(req, res, () => {})
-    await requireAdmin(req, res, () => {})
+    await verifyToken(req, res)
+    await requireAdmin(req, res)
   } catch (error) {
-    return res.status(401).json({ error: 'Unauthorized' })
+    return res.status(401).json({ error: error.message })
   }
 
   try {
