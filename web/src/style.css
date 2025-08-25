@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #f5f1ea;
+    color: #3b3b3b;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    color: #244b3c;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-nature-forest text-white px-6 py-3 rounded-lg font-medium 
+           hover:bg-nature-dark transition-colors duration-200 
+           focus:outline-none focus:ring-2 focus:ring-nature-forest focus:ring-offset-2;
+  }
+  
+  .btn-secondary {
+    @apply bg-nature-warm text-nature-dark px-6 py-3 rounded-lg font-medium 
+           hover:bg-nature-sky hover:text-white transition-colors duration-200 
+           focus:outline-none focus:ring-2 focus:ring-nature-sky focus:ring-offset-2;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-nature-forest text-nature-forest px-6 py-3 rounded-lg font-medium 
+           hover:bg-nature-forest hover:text-white transition-colors duration-200 
+           focus:outline-none focus:ring-2 focus:ring-nature-forest focus:ring-offset-2;
+  }
+  
+  .btn-danger {
+    @apply bg-red-600 text-white px-6 py-3 rounded-lg font-medium 
+           hover:bg-red-700 transition-colors duration-200 
+           focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2;
+  }
+  
+  .card-frame {
+    @apply bg-white rounded-xl shadow-frame border-2 border-nature-warm 
+           hover:shadow-frame-hover hover:scale-[1.02] transition-all duration-300;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 border-2 border-nature-warm rounded-lg 
+           focus:border-nature-forest focus:outline-none focus:ring-2 
+           focus:ring-nature-forest focus:ring-offset-2 transition-colors duration-200;
+  }
+  
+  .text-gradient {
+    @apply bg-gradient-to-r from-nature-forest to-nature-sky bg-clip-text text-transparent;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
