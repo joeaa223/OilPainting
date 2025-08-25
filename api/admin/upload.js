@@ -1,6 +1,5 @@
 import { verifyToken, requireAdmin } from '../lib/auth.js'
 import formidable from 'formidable'
-import sharp from 'sharp'
 import { v4 as uuidv4 } from 'uuid'
 
 // 禁用默认的 body parser，因为我们要处理文件上传
@@ -54,28 +53,15 @@ export default async function handler(req, res) {
       for (const file of uploadedFiles) {
         try {
           // 生成唯一文件名
-          const filename = `${uuidv4()}.jpg`
+          const filename = `${uuidv4()}.${file.originalFilename.split('.').pop()}`
           
-          // 处理图片：调整大小并转换为 JPEG
-          const processedBuffer = await sharp(file.filepath)
-            .resize(1200, 1200, { fit: 'inside', withoutEnlargement: true })
-            .jpeg({ quality: 85 })
-            .toBuffer()
-
-          // 生成缩略图
-          const thumbnailBuffer = await sharp(file.filepath)
-            .resize(300, 300, { fit: 'cover' })
-            .jpeg({ quality: 80 })
-            .toBuffer()
-
-          // 这里应该将图片保存到云存储（如 AWS S3、Cloudinary）
-          // 暂时返回处理后的图片信息
+          // 暂时不处理图片，直接返回文件信息
+          // 在生产环境中，这里应该将图片上传到云存储（如 AWS S3、Cloudinary）
           processedImages.push({
             originalName: file.originalFilename,
             filename: filename,
-            size: processedBuffer.length,
-            thumbnailSize: thumbnailBuffer.length,
-            mimetype: 'image/jpeg'
+            size: file.size,
+            mimetype: file.mimetype
           })
         } catch (error) {
           console.error('Image processing error:', error)
