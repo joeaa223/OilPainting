@@ -4,7 +4,7 @@
   "description": "Oil Painting Gallery - Frontend and API",
   "type": "module",
   "scripts": {
-    "build": "cd web && npm run build",
+    "build": "cd web && npm ci && npm run build",
     "dev": "cd web && npm run dev"
   },
   "dependencies": {
