@@ -10,7 +10,7 @@
             class="flex-shrink-0 hover:opacity-80 transition-opacity duration-200 mr-6"
           >
             <img 
-              src="/img/Jeffry Art Logo.png" 
+              src="/img/jeffry-art-logo.png" 
               alt="Jeffry Goh Art Logo" 
               class="h-12 md:h-16 w-auto object-contain"
             />
