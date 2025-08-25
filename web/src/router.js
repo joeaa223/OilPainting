@@ -33,8 +33,7 @@ const routes = [
     name: 'AdminDashboard',
     component: AdminDashboard,
           meta: { 
-        title: 'Admin Dashboard - Landscape Oil Painting Gallery',
-        requiresAuth: true 
+        title: 'Admin Dashboard - Landscape Oil Painting Gallery'
       }
   },
   {
@@ -42,8 +41,7 @@ const routes = [
     name: 'UploadNewArtwork',
     component: UploadNewArtworkPage,
           meta: { 
-        title: 'Upload New Artwork - Landscape Oil Painting Gallery',
-        requiresAuth: true 
+        title: 'Upload New Artwork - Landscape Oil Painting Gallery'
       }
   },
   {
@@ -51,8 +49,7 @@ const routes = [
     name: 'AppendImages',
     component: () => import('./pages/AppendImagesPage.vue'),
           meta: { 
-        title: 'Add New Images to Existing Collection - Landscape Oil Painting Gallery',
-        requiresAuth: true 
+        title: 'Add New Images to Existing Collection - Landscape Oil Painting Gallery'
       }
   },
   {
@@ -60,8 +57,7 @@ const routes = [
     name: 'EditArtwork',
     component: EditArtworkPage,
           meta: { 
-        title: 'Edit Artwork - Landscape Oil Painting Gallery',
-        requiresAuth: true 
+        title: 'Edit Artwork - Landscape Oil Painting Gallery'
       }
   },
   {
@@ -82,31 +78,11 @@ const router = createRouter({
   }
 })
 
-// 路由守卫
+// 路由守卫 - 只设置页面标题，移除认证检查
 router.beforeEach((to, from, next) => {
   // Set page title
   if (to.meta.title) {
     document.title = to.meta.title
-  }
-  
-  // Check if authentication is required
-  if (to.meta.requiresAuth) {
-    const authStore = useAuthStore()
-    
-    if (!authStore.isAdmin) {
-      // Not admin, redirect to login page
-      next({ name: 'AdminLogin', query: { redirect: to.fullPath } })
-      return
-    }
-  }
-  
-  // If logged in user visits login page, redirect to admin dashboard
-  if (to.name === 'AdminLogin') {
-    const authStore = useAuthStore()
-    if (authStore.isAdmin) {
-      next({ name: 'AdminDashboard' })
-      return
-    }
   }
   
   next()

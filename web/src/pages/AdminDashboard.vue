@@ -18,23 +18,7 @@
           
           <div>
             <h1 class="text-3xl font-serif text-nature-forest">Admin Dashboard</h1>
-            <p class="text-nature-dark mt-1">Welcome back, {{ user?.username }}</p>
-          </div>
-          
-          <!-- 用户菜单 -->
-          <div class="flex items-center space-x-4">
-            <button
-              @click="showChangePassword = true"
-              class="btn-outline"
-            >
-              Change Password
-            </button>
-            <button
-              @click="handleLogout"
-              class="btn-secondary"
-            >
-              Logout
-            </button>
+            <p class="text-nature-dark mt-1">Manage your oil painting gallery</p>
           </div>
         </div>
       </div>
@@ -256,60 +240,7 @@
       </div>
     </main>
 
-    <!-- 修改密码弹窗 -->
-    <div v-if="showChangePassword" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div class="bg-white rounded-xl shadow-frame p-6 max-w-md w-full">
-                 <h3 class="text-xl font-serif text-nature-forest mb-4">Change Password</h3>
-        
-        <form @submit.prevent="handleChangePassword" class="space-y-4">
-          <div>
-                         <label for="currentPassword" class="block text-sm font-medium text-nature-forest mb-2">
-               Current Password
-             </label>
-            <input
-              id="currentPassword"
-              v-model="passwordForm.currentPassword"
-              type="password"
-              required
-              class="input-field"
-                             placeholder="Enter current password"
-            />
-          </div>
-          
-          <div>
-                         <label for="newPassword" class="block text-sm font-medium text-nature-forest mb-2">
-               New Password
-             </label>
-            <input
-              id="newPassword"
-              v-model="passwordForm.newPassword"
-              type="password"
-              required
-              class="input-field"
-                             placeholder="Enter new password"
-              minlength="6"
-            />
-          </div>
-          
-          <div class="flex space-x-3 pt-4">
-            <button
-              type="button"
-              @click="showChangePassword = false"
-              class="btn-secondary flex-1"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              :disabled="!passwordForm.currentPassword || !passwordForm.newPassword"
-              class="btn-primary flex-1 disabled:opacity-50"
-            >
-              Confirm Change
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+
     
     <!-- 删除作品确认弹窗 -->
     <div v-if="showDeleteConfirm" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -352,7 +283,6 @@
 <script>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuthStore } from '../stores/auth'
 import { useGalleryStore } from '../stores/gallery'
 import { deleteArtwork } from '../utils/api'
 
@@ -360,14 +290,7 @@ export default {
   name: 'AdminDashboard',
   setup() {
     const router = useRouter()
-    const authStore = useAuthStore()
     const galleryStore = useGalleryStore()
-    
-    const showChangePassword = ref(false)
-    const passwordForm = ref({
-      currentPassword: '',
-      newPassword: ''
-    })
     
     // 删除相关状态
     const showDeleteConfirm = ref(false)
@@ -395,34 +318,7 @@ export default {
       }
     ])
     
-    // 从store获取用户信息
-    const { user, changePassword } = authStore
-    
-    // 处理退出登录
-    const handleLogout = () => {
-      authStore.logout()
-    }
-    
-    // 处理修改密码
-    const handleChangePassword = async () => {
-      try {
-        const result = await changePassword({
-          currentPassword: passwordForm.value.currentPassword,
-          newPassword: passwordForm.value.newPassword
-        })
-        
-        if (result.success) {
-          alert('密码修改成功')
-          showChangePassword.value = false
-          passwordForm.value = { currentPassword: '', newPassword: '' }
-        } else {
-          alert(result.error || '密码修改失败')
-        }
-      } catch (error) {
-        console.error('修改密码失败:', error)
-        alert('密码修改失败')
-      }
-    }
+
     
     // 格式化时间
     const formatTime = (time) => {
@@ -518,9 +414,6 @@ export default {
     })
     
     return {
-      user,
-      showChangePassword,
-      passwordForm,
       showDeleteConfirm,
       artworkToDelete,
       deleting,
@@ -529,11 +422,9 @@ export default {
       artworksError,
       stats,
       recentActivities,
-      handleLogout,
-      handleChangePassword,
-             loadArtworks,
-       openDeleteConfirm,
-       handleDeleteArtwork,
+      loadArtworks,
+      openDeleteConfirm,
+      handleDeleteArtwork,
       formatTime
     }
   }
