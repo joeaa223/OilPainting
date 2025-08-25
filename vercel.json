@@ -4,7 +4,8 @@
   "outputDirectory": "web/dist",
   "installCommand": "npm ci",
   "routes": [
+    { "handle": "filesystem" },
     { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "src": "/(.*)", "dest": "/index.html" }
+    { "src": "/.*", "dest": "/index.html" }
   ]
 }
