@@ -22,7 +22,7 @@ export default async function handler(req, res) {
     const passwordHash = await bcrypt.hash('admin123', 10)
     
     await collection.insertOne({
-      username: 'admin',
+      email: 'admin@jeffryart.com',
       passwordHash,
       role: 'admin',
       createdAt: new Date()
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
     
     res.status(201).json({ 
       message: 'Default admin user created successfully',
-      username: 'admin',
+      email: 'admin@jeffryart.com',
       password: 'admin123'
     })
   } catch (error) {

@@ -23,18 +23,18 @@
         
         <!-- 登录表单 -->
         <form @submit.prevent="handleLogin" class="space-y-6">
-          <!-- 用户名 -->
+          <!-- 邮箱 -->
           <div>
-            <label for="username" class="block text-sm font-medium text-nature-forest mb-2">
-              Username
+            <label for="email" class="block text-sm font-medium text-nature-forest mb-2">
+              Email
             </label>
             <input
-              id="username"
-              v-model="form.username"
-              type="text"
+              id="email"
+              v-model="form.email"
+              type="email"
               required
               class="input-field"
-              placeholder="Enter username"
+              placeholder="Enter your email address"
               :disabled="loading"
             />
           </div>
@@ -63,7 +63,7 @@
           <!-- 登录按钮 -->
           <button
             type="submit"
-            :disabled="loading || !form.username || !form.password"
+            :disabled="loading || !form.email || !form.password"
             class="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <div v-if="loading" class="flex items-center justify-center space-x-2">
@@ -88,7 +88,7 @@
         <div class="mt-6 p-4 bg-nature-warm rounded-lg">
           <div class="text-sm text-nature-dark">
             <p class="font-medium mb-2">Default Admin Account:</p>
-            <p>Username: <code class="bg-white px-2 py-1 rounded">admin</code></p>
+            <p>Email: <code class="bg-white px-2 py-1 rounded">admin@jeffryart.com</code></p>
             <p>Password: <code class="bg-white px-2 py-1 rounded">admin123</code></p>
             <p class="text-xs mt-2 text-nature-sky">
               ⚠️ Please change the default password in production environment
@@ -113,7 +113,7 @@ export default {
     const authStore = useAuthStore()
     
     const form = ref({
-      username: '',
+      email: '',
       password: ''
     })
     
@@ -124,7 +124,7 @@ export default {
     const handleLogin = async () => {
       try {
         const result = await authStore.login({
-          username: form.value.username.trim(),
+          email: form.value.email.trim(),
           password: form.value.password
         })
         

@@ -3,6 +3,9 @@ import { ObjectId } from 'mongodb'
 import { verifyToken, requireAdmin } from '../lib/auth.js'
 
 export default async function handler(req, res) {
+  if (!clientPromise) {
+    return res.status(503).json({ error: 'Database is not configured' })
+  }
   const { id } = req.query
   
   if (!ObjectId.isValid(id)) {

@@ -5,17 +5,17 @@ import jwt from 'jsonwebtoken'
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
-      const { username, password } = req.body
+      const { email, password } = req.body
       
-      if (!username || !password) {
-        return res.status(400).json({ error: 'Username and password required' })
+      if (!email || !password) {
+        return res.status(400).json({ error: 'Email and password required' })
       }
       
       const client = await clientPromise
       const db = client.db('oilpainting')
       const collection = db.collection('users')
       
-      const user = await collection.findOne({ username })
+      const user = await collection.findOne({ email })
       
       if (!user) {
         return res.status(401).json({ error: 'Invalid credentials' })
@@ -32,7 +32,7 @@ export default async function handler(req, res) {
       }
       
       const token = jwt.sign(
-        { userId: user._id, username: user.username, role: user.role },
+        { userId: user._id, email: user.email, role: user.role },
         process.env.JWT_SECRET,
         { expiresIn: '24h' }
       )
@@ -41,7 +41,7 @@ export default async function handler(req, res) {
         token,
         user: {
           id: user._id,
-          username: user.username,
+          email: user.email,
           role: user.role
         }
       })

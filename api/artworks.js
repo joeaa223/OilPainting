@@ -11,6 +11,20 @@ export const config = {
 }
 
 export default async function handler(req, res) {
+  // If database is not configured, return a graceful empty dataset instead of 500
+  if (!clientPromise) {
+    if (req.method === 'GET') {
+      return res.status(200).json({
+        items: [],
+        total: 0,
+        page: 1,
+        totalPages: 0,
+        isEmpty: true
+      })
+    }
+    return res.status(503).json({ error: 'Database is not configured' })
+  }
+
   const client = await clientPromise
   const db = client.db('oilpainting')
   const collection = db.collection('artworks')
