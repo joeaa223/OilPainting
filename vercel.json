@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
+  "buildCommand": "cd web && npm run build",
   "outputDirectory": "web/dist",
-  "installCommand": "npm ci",
+  "installCommand": "cd web && npm ci",
+  "env": {
+    "NPM_CONFIG_PRODUCTION": "false"
+  },
   "routes": [
     { "handle": "filesystem" },
     { "src": "/api/(.*)", "dest": "/api/$1" },
